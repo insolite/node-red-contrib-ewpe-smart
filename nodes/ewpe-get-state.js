@@ -3,7 +3,7 @@ const { DeviceManager } = require('../ewpe-smart');
 module.exports = (RED) => {
   const deviceManager = new DeviceManager('192.168.24.255'); // FIXME: dynamic config
 
-  const GetStateNode = (config) => {
+  function GetStateNode (config) {
     RED.nodes.createNode(this, config);
     var node = this;
     node.on('input', (msg) => {
@@ -14,6 +14,9 @@ module.exports = (RED) => {
       deviceManager.getDeviceStatus(this.id)
         .then((state) => {
           node.send(state);
+        })
+        .catch((err) => {
+          console.error(err);
         });
       // msg.payload = msg.payload.toLowerCase();
       // node.send(msg);
