@@ -7,7 +7,7 @@ module.exports = (RED) => {
     RED.nodes.createNode(this, config);
     var node = this;
     node.on('input', (msg) => {
-      const deviceId = msg.payload.deviceId || config.id;
+      const deviceId = msg.payload.deviceId || config.deviceId;
       if (!deviceId) {
         return;
       }
