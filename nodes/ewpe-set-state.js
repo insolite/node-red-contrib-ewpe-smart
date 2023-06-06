@@ -8,10 +8,11 @@ module.exports = (RED) => {
     var node = this;
     node.on('input', (msg) => {
       const deviceId = msg.payload.deviceId || config.id;
+      const newState = msg.payload.data;
       if (!deviceId) {
         return;
       }
-      deviceManager.getDeviceStatus(deviceId)
+      deviceManager.setDeviceState(deviceId, newState)
         .then((state) => {
           node.send(state);
         })
@@ -21,5 +22,5 @@ module.exports = (RED) => {
     });
   }
 
-  RED.nodes.registerType('ewpe-get-state', GetStateNode);
+  RED.nodes.registerType('ewpe-set-state', GetStateNode);
 };

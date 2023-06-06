@@ -15,7 +15,8 @@
   "homepage": "https://github.com/insolite/node-red-ewpe-smart#readme",
   "node-red" : {
     "nodes": {
-      "ewpe-get-state": "nodes/ewpe-get-state.js"
+      "ewpe-get-state": "nodes/ewpe-get-state.js",
+      "ewpe-set-state": "nodes/ewpe-set-state.js"
     }
   }
 }
