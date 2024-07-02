@@ -1,4 +1,4 @@
-const { DeviceManager } = require('../ewpe-smart');
+const DeviceManager = require('ewpe-smart-mqtt/app/device_manager');
 
 module.exports = (RED) => {
   const deviceManager = new DeviceManager('192.168.24.255'); // FIXME: dynamic config
