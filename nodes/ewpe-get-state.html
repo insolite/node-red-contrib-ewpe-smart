@@ -1,9 +1,11 @@
 <script type="text/javascript">
   RED.nodes.registerType('ewpe-get-state', {
     category: 'ewpe-smart',
-    color: '#a6bbcf',
+    color: '#095ab5',
     defaults: {
-      deviceId: { value: '' },
+      deviceId: {
+        value: '',
+      },
       deviceManager: {
         value: '',
         type: 'ewpe-device-manager',
@@ -11,7 +13,7 @@
     },
     inputs: 1,
     outputs: 1,
-    icon: 'air-conditioner.png',
+    icon: 'font-awesome/fa-thermometer',
     label: function () {
       return this.name || 'EWPE Smart Get State';
     },
@@ -31,7 +33,7 @@
     >
   </div>
   <div class="form-row">
-    <label for="node-input-deviceId"><i class="fa fa-air-conditioner"></i> Device ID</label>
+    <label for="node-input-deviceId"><i class="fa fa-microchip"></i> Device ID</label>
     <input
       type="text"
       id="node-input-deviceId"
@@ -39,7 +41,7 @@
     >
   </div>
   <div class="form-row">
-    <label for="node-input-deviceManager"><i class="fa fa-tower-broadcast"></i> Device Manager</label>
+    <label for="node-input-deviceManager"><i class="fa fa-server"></i> Device Manager</label>
     <input
       type="text"
       id="node-input-deviceManager"
