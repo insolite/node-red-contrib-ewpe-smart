@@ -4,6 +4,10 @@
     color: '#a6bbcf',
     defaults: {
       deviceId: { value: '' },
+      deviceManager: {
+        value: '',
+        type: 'ewpe-device-manager',
+      },
     },
     inputs: 1,
     outputs: 1,
@@ -19,19 +23,27 @@
   data-template-name="ewpe-get-state"
 >
   <div class="form-row">
-    <div class="form-row">
-      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-      <input
-        type="text"
-        id="node-input-name"
-        placeholder="Name"
-      >
-    </div>
-    <label for="node-input-deviceId"><i class="fa fa-tag"></i> Device ID</label>
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input
+      type="text"
+      id="node-input-name"
+      placeholder="Name"
+    >
+  </div>
+  <div class="form-row">
+    <label for="node-input-deviceId"><i class="fa fa-air-conditioner"></i> Device ID</label>
     <input
       type="text"
       id="node-input-deviceId"
       placeholder="Id"
+    >
+  </div>
+  <div class="form-row">
+    <label for="node-input-deviceManager"><i class="fa fa-tower-broadcast"></i> Device Manager</label>
+    <input
+      type="text"
+      id="node-input-deviceManager"
+      placeholder="Device Manager"
     >
   </div>
 </script>

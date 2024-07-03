@@ -1,19 +1,28 @@
-const DeviceManager = require('ewpe-smart-mqtt/app/device_manager');
-
 module.exports = (RED) => {
-  const deviceManager = new DeviceManager('192.168.24.255'); // FIXME: dynamic config
-
   function GetStateNode (config) {
     RED.nodes.createNode(this, config);
-    var node = this;
+    this.name = config.name;
+    const node = this;
+
     node.on('input', (msg) => {
       const deviceId = msg.payload.deviceId || config.deviceId;
       if (!deviceId) {
         return;
       }
+      const deviceManagerNode = RED.nodes.getNode(config.deviceManager);
+      if (!deviceManagerNode) {
+        return;
+      }
+      const deviceManager = deviceManagerNode.deviceManager;
       deviceManager.getDeviceStatus(deviceId)
         .then((state) => {
-          node.send(state);
+          node.send({
+            ...msg,
+            payload: {
+              ...msg.payload,
+              state,
+            },
+          });
         })
         .catch((err) => {
           console.error(err);

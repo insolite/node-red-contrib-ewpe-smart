@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/insolite/node-red-ewpe-smart.git"
   },
-  "author": "Oleg Krasniko",
+  "author": "Oleg Krasnikov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/insolite/node-red-ewpe-smart/issues"
@@ -15,6 +15,7 @@
   "homepage": "https://github.com/insolite/node-red-ewpe-smart#readme",
   "node-red": {
     "nodes": {
+      "ewpe-device-manager": "nodes/ewpe-device-manager.js",
       "ewpe-get-state": "nodes/ewpe-get-state.js",
       "ewpe-set-state": "nodes/ewpe-set-state.js"
     }
