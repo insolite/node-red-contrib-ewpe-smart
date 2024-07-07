@@ -9,7 +9,7 @@ Based on [stas-demydiuk/ewpe-smart-mqtt](https://github.com/stas-demydiuk/ewpe-s
 The package isn't yet published. It can be installed via github link though:
 
 ```bash
-npm i git@github.com:insolite/node-red-ewpe-smart.git
+npm i git@github.com:insolite/node-red-contrib-ewpe-smart.git
 ```
 
 ## Contributing

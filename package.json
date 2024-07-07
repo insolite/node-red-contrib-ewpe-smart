@@ -8,14 +8,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/insolite/node-red-ewpe-smart.git"
+    "url": "git+https://github.com/insolite/node-red-contrib-ewpe-smart.git"
   },
   "author": "Oleg Krasnikov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/insolite/node-red-ewpe-smart/issues"
+    "url": "https://github.com/insolite/node-red-contrib-ewpe-smart/issues"
   },
-  "homepage": "https://github.com/insolite/node-red-ewpe-smart#readme",
+  "homepage": "https://github.com/insolite/node-red-contrib-ewpe-smart#readme",
   "keywords": [
     "node-red",
     "ewpe-smart"
