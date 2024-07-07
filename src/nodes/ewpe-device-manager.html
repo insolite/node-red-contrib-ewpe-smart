@@ -29,8 +29,15 @@
 </script>
 
 <script
-  type="text/html"
+  type="text/x-red"
   data-help-name="ewpe-device-manager"
 >
-  <p>A node that communicates with EWPE Smart devices</p>
+  <p>Device Manager configuration node that holds network parameters.</p>
+  <h4>Configuration</h4>
+  <ul>
+    <li><b>Network Address</b> - IP address to scan devices on. Can be a broadcast address or
+    semicolon-separated addresses. See base <code>ewpe-smart-mqtt</code> documentation for details.
+    The Node-RED instance, devices, and the specified address must be in the same network unless
+    specific forwarding is configured.</li>
+  </ul>
 </script>

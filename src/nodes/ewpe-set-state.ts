@@ -1,35 +1,59 @@
-export default (RED) => {
-  function SetStateNode (config) {
+import {
+  Node,
+  NodeDef,
+  NodeInitializer,
+} from 'node-red';
+import { nodePrefix } from '../constants';
+import {
+  DeviceId,
+  DeviceState,
+  SetStateNodeMessage,
+  StateNodeMessage,
+} from '../types';
+import { getCurrentDeviceManager } from '../utils';
+
+export interface SetStateConfig extends NodeDef {
+  deviceId?: DeviceId;
+  deviceManager?: string;
+}
+
+const nodeInit: NodeInitializer = (RED) => {
+  function SetStateNode (config: SetStateConfig) {
     RED.nodes.createNode(this, config);
     this.name = config.name;
-    const node = this;
+    const node: Node = this;
 
-    node.on('input', (msg) => {
-      const deviceId = msg.payload.deviceId || config.deviceId;
-      const newState = msg.payload.data;
+    node.on('input', (msg: SetStateNodeMessage) => {
+      const deviceId = msg.payload?.deviceId || config.deviceId;
+      const newState = msg.payload?.data || {};
       if (!deviceId) {
+        node.error('Device ID is not set', msg);
         return;
       }
-      const deviceManagerNode = RED.nodes.getNode(config.deviceManager);
-      if (!deviceManagerNode) {
+      const deviceManager = getCurrentDeviceManager(RED, config.deviceManager);
+      if (!deviceManager) {
+        node.error('Device Manager is not initialized', msg);
         return;
       }
-      const deviceManager = deviceManagerNode.deviceManager;
       deviceManager.setDeviceState(deviceId, newState)
-        .then((state) => {
-          node.send({
+        .then((state: DeviceState) => {
+          const stateMsg: StateNodeMessage = {
             ...msg,
             payload: {
               ...msg.payload,
+              deviceId,
               state,
             },
-          });
+          };
+          node.send(stateMsg);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((error) => {
+          node.error(`Error setting device state: ${error}`, msg);
         });
     });
   }
 
-  RED.nodes.registerType('ewpe-set-state', SetStateNode);
+  RED.nodes.registerType(`${nodePrefix}set-state`, SetStateNode);
 };
+
+export default nodeInit;

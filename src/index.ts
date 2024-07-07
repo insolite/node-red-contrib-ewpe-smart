@@ -1,6 +1,6 @@
-import DeviceManager from './nodes/ewpe-device-manager.ts';
-import GetState from './nodes/ewpe-get-state.ts';
-import SetState from './nodes/ewpe-set-state.ts';
+import DeviceManager from './nodes/ewpe-device-manager';
+import GetState from './nodes/ewpe-get-state';
+import SetState from './nodes/ewpe-set-state';
 
 export default (RED) => {
   DeviceManager(RED);

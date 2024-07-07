@@ -1,85 +1,103 @@
 'use strict';
 
-var DeviceManager$1 = require('ewpe-smart-mqtt/app/device_manager');
+var DeviceManager = require('ewpe-smart-mqtt/app/device_manager');
 
-var DeviceManager = (RED) => {
+const nodePrefix = "ewpe-";
+
+const nodeInit$2 = (RED) => {
   function DeviceManagerNode(config) {
     RED.nodes.createNode(this, config);
     this.networkAddress = config.networkAddress;
-    const deviceManager = new DeviceManager$1(this.networkAddress);
     const node = this;
-    node.deviceManager = deviceManager;
+    node.deviceManager = new DeviceManager(node.networkAddress);
   }
-  RED.nodes.registerType("ewpe-device-manager", DeviceManagerNode);
+  RED.nodes.registerType(`${nodePrefix}device-manager`, DeviceManagerNode);
 };
 
-var GetState = (RED) => {
+const getCurrentDeviceManager = (RED, deviceManagerId) => {
+  if (!deviceManagerId) {
+    return;
+  }
+  const deviceManagerNode = RED.nodes.getNode(deviceManagerId);
+  if (!deviceManagerNode) {
+    return;
+  }
+  return deviceManagerNode.deviceManager;
+};
+
+const nodeInit$1 = (RED) => {
   function GetStateNode(config) {
     RED.nodes.createNode(this, config);
     this.name = config.name;
     const node = this;
     node.on("input", (msg) => {
-      const deviceId = msg.payload.deviceId || config.deviceId;
+      const deviceId = msg.payload?.deviceId || config.deviceId;
       if (!deviceId) {
+        node.error("Device ID is not set", msg);
         return;
       }
-      const deviceManagerNode = RED.nodes.getNode(config.deviceManager);
-      if (!deviceManagerNode) {
+      const deviceManager = getCurrentDeviceManager(RED, config.deviceManager);
+      if (!deviceManager) {
+        node.error("Device Manager is not initialized", msg);
         return;
       }
-      const deviceManager = deviceManagerNode.deviceManager;
       deviceManager.getDeviceStatus(deviceId).then((state) => {
-        node.send({
+        const stateMsg = {
           ...msg,
           payload: {
             ...msg.payload,
+            deviceId,
             state
           }
-        });
-      }).catch((err) => {
-        console.error(err);
+        };
+        node.send(stateMsg);
+      }).catch((error) => {
+        node.error(`Error setting device state: ${error}`, msg);
       });
     });
   }
-  RED.nodes.registerType("ewpe-get-state", GetStateNode);
+  RED.nodes.registerType(`${nodePrefix}get-state`, GetStateNode);
 };
 
-var SetState = (RED) => {
+const nodeInit = (RED) => {
   function SetStateNode(config) {
     RED.nodes.createNode(this, config);
     this.name = config.name;
     const node = this;
     node.on("input", (msg) => {
-      const deviceId = msg.payload.deviceId || config.deviceId;
-      const newState = msg.payload.data;
+      const deviceId = msg.payload?.deviceId || config.deviceId;
+      const newState = msg.payload?.data || {};
       if (!deviceId) {
+        node.error("Device ID is not set", msg);
         return;
       }
-      const deviceManagerNode = RED.nodes.getNode(config.deviceManager);
-      if (!deviceManagerNode) {
+      const deviceManager = getCurrentDeviceManager(RED, config.deviceManager);
+      if (!deviceManager) {
+        node.error("Device Manager is not initialized", msg);
         return;
       }
-      const deviceManager = deviceManagerNode.deviceManager;
       deviceManager.setDeviceState(deviceId, newState).then((state) => {
-        node.send({
+        const stateMsg = {
           ...msg,
           payload: {
             ...msg.payload,
+            deviceId,
             state
           }
-        });
-      }).catch((err) => {
-        console.error(err);
+        };
+        node.send(stateMsg);
+      }).catch((error) => {
+        node.error(`Error setting device state: ${error}`, msg);
       });
     });
   }
-  RED.nodes.registerType("ewpe-set-state", SetStateNode);
+  RED.nodes.registerType(`${nodePrefix}set-state`, SetStateNode);
 };
 
 var index = (RED) => {
-  DeviceManager(RED);
-  GetState(RED);
-  SetState(RED);
+  nodeInit$2(RED);
+  nodeInit$1(RED);
+  nodeInit(RED);
 };
 
 module.exports = index;
