@@ -57,28 +57,36 @@
   <p>Device configuration node that <b>reads</b> the state of EWPE Smart device.</p>
   <h4>Configuration</h4>
   <ul>
+    <li>(optional) <b>Name</b> - Name of the node, presumably filled with a verbose device name.</li>
     <li>(optional) <b>Device ID</b> - a string identifying device found by DeviceManager.
     Can be optionally overwritten by incoming message: <code>msg.payload.deviceId</code>.
     Must be set in at least one of the ways.</li>
     <li><b>Device Manager</b> - Device Manager configuration node reference.</li>
   </ul>
   <h4>Input Message</h4>
-  <ul>
-    <li>(optional) <b>msg.payload</b> - Contains device info.
-      <ul>
-        <li>(optional) <b>deviceId</b> - Optionally override Device ID set in node configuration.</li>
-      </ul>
-    </li>
-  </ul>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>
+      Contains device info.
+      <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        <dd>Optionally override Device ID set in node configuration.</dd>
+      </dl>
+    </dd>
+  </dl>
   <h4>Output Message</h4>
-  <ul>
-    <li><b>msg.payload</b> - Contains device info.
-      <ul>
-        <li><b>deviceId</b> - Device ID used to get state.</li>
-        <li><b>state</b> - Device State object. See <code>gree-remote</code> package docs for available keys.</li>
-      </ul>
-    </li>
-  </ul>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>
+      Contains device info.
+      <dl class="message-properties">
+        <dt>deviceId <span class="property-type">string</span></dt>
+        <dd>Device ID used to get state.</dd>
+        <dt>state <span class="property-type">object</span></dt>
+        <dd>Device State object. See <code>gree-remote</code> package docs for available keys.</dd>
+      </dl>
+    </dd>
+  </dl>
   <p>Extra <code>msg</code> parameters such as <code>msg.topic</code> and the rest of <code>msg.payload</code>
-  from input message are merged and passed through to the output message.</p>
+  from the input message are merged and passed through to the output message.</p>
 </script>
