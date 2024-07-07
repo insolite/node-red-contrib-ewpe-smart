@@ -37,7 +37,6 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "rollup -c",
-    "prepublish": "yarn clean && yarn build"
+    "build": "rollup -c"
   }
 }
