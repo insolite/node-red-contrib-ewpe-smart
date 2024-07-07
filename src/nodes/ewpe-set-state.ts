@@ -1,4 +1,4 @@
-module.exports = (RED) => {
+export default (RED) => {
   function SetStateNode (config) {
     RED.nodes.createNode(this, config);
     this.name = config.name;

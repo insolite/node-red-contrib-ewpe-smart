@@ -1,7 +1,8 @@
-const DeviceManager = require('ewpe-smart-mqtt/app/device_manager');
+import DeviceManager from 'ewpe-smart-mqtt/app/device_manager';
 
-module.exports = (RED) => {
+export default (RED) => {
   function DeviceManagerNode(config) {
+    // console.log(asd);
     RED.nodes.createNode(this, config);
 
     this.networkAddress = config.networkAddress;
