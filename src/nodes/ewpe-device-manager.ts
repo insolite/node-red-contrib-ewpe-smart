@@ -22,6 +22,16 @@ const nodeInit: NodeInitializer = (RED) => {
     const node: DeviceManagerNode = this;
 
     node.deviceManager = new DeviceManager(node.networkAddress);
+
+    const scanInterval = setInterval(() => {
+      // Re-scan devices periodically as if there were no devices
+      //  at the moment of initialization, they will never appear later w/o scanning.
+      node.deviceManager.connection.scan(node.networkAddress);
+    }, 1000 * 60 * 2); // 2min
+
+    node.on('close', () => {
+      clearInterval(scanInterval);
+    });
   }
 
   RED.nodes.registerType(`${nodePrefix}device-manager`, DeviceManagerNode);

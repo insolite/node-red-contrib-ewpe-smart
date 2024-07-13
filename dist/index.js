@@ -10,6 +10,12 @@ const nodeInit$2 = (RED) => {
     this.networkAddress = config.networkAddress;
     const node = this;
     node.deviceManager = new DeviceManager(node.networkAddress);
+    const scanInterval = setInterval(() => {
+      node.deviceManager.connection.scan(node.networkAddress);
+    }, 1e3 * 60 * 2);
+    node.on("close", () => {
+      clearInterval(scanInterval);
+    });
   }
   RED.nodes.registerType(`${nodePrefix}device-manager`, DeviceManagerNode);
 };
